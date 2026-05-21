@@ -1,0 +1,21 @@
+# === TOMCAT COMMANDS CHEAT SHEET ===
+
+# 1. Starting and Stopping
+./bin/startup.sh       # Start the server
+./bin/shutdown.sh      # Stop the server
+tail -f logs/catalina.out # View live logs (very useful for debugging)
+
+# 2. Deployment Commands (Run from your project root)
+# Copy Backend WAR
+cp ~/Projects/Website/E-Commerce/backend/target/backend-0.0.1-SNAPSHOT.war ~/apache-tomcat-11.0.22/webapps/backend.war
+
+# Copy Frontend Build
+rm -rf ~/apache-tomcat-11.0.22/webapps/ROOT/*
+cp -r ~/Projects/Website/E-Commerce/frontend/dist/* ~/apache-tomcat-11.0.22/webapps/ROOT/
+
+# 3. Permissions (Run once if scripts won't run)
+chmod +x bin/*.sh
+
+# 4. Access URLs
+# Frontend: http://[YOUR_IP]:8080/
+# Backend API: http://[YOUR_IP]:8080/backend/api/

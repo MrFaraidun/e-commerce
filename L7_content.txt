@@ -1,0 +1,676 @@
+Enterprise System
+Lecture 7: ReactJS
+
+Lecturer: Hawbash Abas
+University of Sulaimani
+
+2026
+
+04 May 2026
+
+Learning Objectives
+After completing this chapter, you will be able to:
+
+03
+
+04 May 2026
+
+Nodejs
+
+React
+
+React Routing and Hooks
+
+Integrate a spring boot app to React
+
+Enterprise System
+
+2
+
+Nodejs
+What is Node.js?
+
+Node.js is a JavaScript runtime environment built on Chrome’s V8 engine.
+It allows JavaScript to run outside the browser (on the server or CLI).
+
+04 May 2026
+
+Enterprise System
+
+3
+
+Nodejs
+
+04 May 2026
+
+Enterprise System
+
+4
+
+Nodejs
+Why Do We Need Node.js?
+✓ To run development tools (like Vite, Webpack)
+✓ To manage dependencies (via npm)
+✓ To build and bundle frontend code
+
+✓ Enables modern frontend workflows
+
+04 May 2026
+
+Enterprise System
+
+5
+
+Nodejs | NPM
+What is NPM?
+npm (Node Package Manager) is:
+• A package manager for JavaScript libraries
+• A tool to install dependencies (React, Axios, etc.)
+Example:
+
+04 May 2026
+
+Enterprise System
+
+6
+
+Nodejs | Download
+• The official Node.js website has installation instructions for Node.js: https://nodejs.org
+
+04 May 2026
+
+Enterprise System
+
+7
+
+React
+React is a JavaScript library for building user interfaces, especially SPA (Single
+Page Applications).
+Why React is Useful?
+
+• Component-based architecture
+• Fast rendering (Virtual DOM)
+• Reusable UI
+• Strong ecosystem
+
+04 May 2026
+
+Enterprise System
+
+8
+
+Features of ReactJs
+1. JSX
+HTML-like syntax inside JavaScript to build UI easily.
+2. Components
+Reusable pieces of UI (like functions for UI).
+3. Unidirectional Data Flow (One Way Direction)
+Data flows in one direction (parent → child), making apps predictable.
+4. Virtual DOM
+Fast UI updates by changing only what is needed.
+5. Simplicity
+Easy to learn, clean structure, less code.
+
+6. Performance
+Efficient rendering makes apps fast.
+
+04 May 2026
+
+Enterprise System
+
+9
+
+React | DOM
+What is DOM?
+Document Object Model is a tree-based representation of a web page that allows
+programming languages like JavaScript to dynamically access and update content,
+structure, and styles.
+
+It represents a web page as a tree structure of objects (nodes) that JavaScript can read
+and modify.
+Body
+
+HTML
+04 May 2026
+
+h1
+
+p
+
+Hello
+
+Welcome
+
+DOM
+Enterprise System
+
+10
+
+React | Virtual DOM
+Virtual DOM is an in-memory representation of the real DOM used by React to optimize UI
+updates by minimizing direct manipulation of the actual DOM.
+Virtual DOM Work
+
+04 May 2026
+
+Enterprise System
+
+11
+
+React | Create New Project |
+➢ Create a modern app via a build tool:
+•
+
+Vite
+
+•
+
+Next.js
+
+•
+
+Remix
+
+➢ Vite is a modern frontend build tool and development server designed to make
+working with frameworks like React much faster and simpler.
+➢ Vite does two main jobs:
+• Dev server (during development)
+• Build tool (for production)
+Note:
+create-react-app (CRA) is now officially deprecated.
+04 May 2026
+
+Enterprise System
+
+12
+
+React | Create New Project via @vite ||
+1. Create a root folder in your drive(on Desktop)
+2. Go to Visual studio Code
+3. Then Open the folder root.
+4. Go to Terminal tab, You should see:
+5. Go to inside your folder project on desktop
+
+6. Write this command to create new project: npm create vite@latest
+
+04 May 2026
+
+Enterprise System
+
+13
+
+React | Create New Project |||
+7. You will be prompted:
+
+Project structure
+
+Choose:
+• React
+• JavaScript (or TypeScript if needed)
+8. Navigate into project
+9. Install dependencies
+✓ npm install
+✓ npm install bootstrap
+✓ npm install axios
+✓ Npm install react-router-dom
+04 May 2026
+
+Enterprise System
+
+14
+
+React | Create New Project ||||
+10. Run development server
+
+11. Open in browser
+
+Output:
+
+04 May 2026
+
+Enterprise System
+
+15
+
+React Components
+React have two types of components: Functional Component and Class Component
+
+1. Class Components (Old
+
+)
+
+• Use classes
+• Have lifecycle methods
+
+2. Functional Components (Modern
+
+)
+
+• Simple JavaScript functions
+• Use Hooks (useState, useEffect)
+Today, functional components are preferred
+Note: If a component uses state (like useState or this.state), it's stateful; otherwise, it's stateless
+04 May 2026
+
+Enterprise System
+
+16
+
+Components of React| 1. Functional Component
+
+04 May 2026
+
+Enterprise System
+
+17
+
+Components of React| 2.Props
+• Props (Passing Data)
+• Props = input to components
+Example:
+
+Usage
+
+04 May 2026
+
+Enterprise System
+
+18
+
+Components of React | 3.Hooks
+React Hooks are special built-in functions that allow functional components to use state,
+lifecycle features, and other React capabilities without writing class components.
+Core Idea
+
+useState (State Management)
+
+Before Hooks:
+
+lifecycle
+After Hooks:
+• Functional components became powerful enough
+to do everything
+
+Hooks = “features for functional components”
+
+04 May 2026
+
+Enterprise System
+
+useEffect (Side Effects / Lifecycle)
+
+Hooks
+
+• Only class components could manage state and
+
+useContext (Global State Sharing)
+useMemo / useCallback
+(Performance Optimization)
+
+useRef (Direct DOM Access)
+
+19
+
+Components of React | 3.Hooks→useState()
+1. useState (State Management): Used to store and update data inside a component.
+
+count = current state
+setCount = update function
+
+04 May 2026
+
+Enterprise System
+
+20
+
+Components of React | 3.Hooks→useEffect()
+2. useEffect (Side Effects / Lifecycle)
+General Syntax
+
+Used for:
+
+• API calls
+• timers
+• DOM updates
+
+• lifecycle events
+
+Three types of using sideEffect():
+
+04 May 2026
+
+Enterprise System
+
+21
+
+Components of React | 3.Hooks→useEffect()
+1.
+
+Run on Every Render (No Dependency Array)
+
+3.
+
+Run When Dependency Changes
+
+Runs:
+• First render
+• Every update (state/props change)
+2.
+
+Run Only Once (On Mount)
+Runs:
+• On first render
+• Whenever count changes
+
+Runs:
+• Only when component loads
+Common use: API calls
+04 May 2026
+
+Enterprise System
+
+22
+
+Components of React | 3.Hooks→useEffect()
+• Example using useEffect to API call:
+
+04 May 2026
+
+API: http://localhost:8080/employee/all
+
+Enterprise System
+
+23
+
+React Router DOM |
+React Router DOM is a library that enables navigation between pages (components) in a
+React application without reloading the page.
+
+It turns your app into a Single Page Application (SPA)
+Key Components
+
+1. Installation
+
+• BrowserRouter → wraps the app
+
+2. Basic Setup: main.jsx
+
+• Routes → holds all routes
+• Route → defines path + component
+• Link → navigation without reload
+
+04 May 2026
+
+Enterprise System
+
+24
+
+React Router DOM||
+3. Create Simple Pages
+
+4. Routing Example (App.jsx)
+
+Home.jsx
+
+Employee.jsx
+
+Department.jsx
+
+04 May 2026
+
+Enterprise System
+
+25
+
+React Axios
+Axios is a promise-based HTTP client used to send requests (GET, POST, PUT, DELETE)
+from React to a backend (e.g., Spring Boot).
+1. Installation
+2. Basic Usage (GET Request)
+
+04 May 2026
+
+Enterprise System
+
+26
+
+Integrate React with Spring Boot application |
+FrontEnd
+
+1. Backend (Spring Boot)
+
+Backend
+
+Create REST API:
+
+Use @CrossOrigin to allow React access
+04 May 2026
+
+Enterprise System
+
+27
+
+Integrate React with Spring Boot application ||
+• Cross-Origin Resource Sharing (CORS) is a security mechanism implemented by web browsers to restrict
+cross-origin HTTP requests. It prevents web pages from making requests to a different domain than the one
+from which the page was served.
+
+• To resolve CORS issues, you can follow these steps:
+1. Configure CORS in your Spring Boot backend:
+• Add the @CrossOrigin annotation to your controller class or specific controller methods to allow crossorigin requests from the React frontend. @CrossOrigin(origins = "*")
+2. Handle CORS in your React frontend:
+• Install the cors package (npm install cors) to add a middleware that allows cross-origin requests in your
+development server.
+
+04 May 2026
+
+Enterprise System
+
+28
+
+Integrate React with Spring Boot application |||
+2. Frontend (React)
+Install Axios:
+
+04 May 2026
+
+3. Call API from React
+
+Enterprise System
+
+29
+
+Deployment | Spring boot app
+1 Build spring boot app war file to upload to an external server
+Step 1: • Add Package “war” to POM.xml
+
+• Provide Tomcat dependency
+
+• MainClass: Extend SpringBootServletInitializer
+
+04 May 2026
+
+Enterprise System
+
+30
+
+Deployment | Spring boot app
+Step 2: Go to left pane in VS code, click on Maven →
+Lifecycle→ Click on package
+Step 3: See Terminal after package process done!
+
+04 May 2026
+
+Enterprise System
+
+31
+
+Deployment | Spring boot app
+Step 4: Check target folder in source code app
+Output: target/your-app.war
+Rename your-app.war→backend.war
+Step 5: Copy WAR
+Move .war file to:
+Step 6: Start Tomcat
+
+Access:
+http://localhost:8080/backend/
+
+04 May 2026
+
+Enterprise System
+
+32
+
+Deployment | React app
+2 Build React app, Inside your React project (using React):
+• Step 1: build production files
+
+Output folder:
+
+• Step 2: Deploy React on Tomcat
+Rename dist folder, dist→frontend
+
+• Step 3: Copy(frontend) to Tomcat
+
+http://localhost:8080/frontend/
+
+Tomcat/webapps/
+└─ frontend/
+|----- index.html
+|----- assets/
+04 May 2026
+
+Access:
+
+Enterprise System
+
+33
+
+Deployment
+Final step: Connect React to Spring Boot
+In React API calls (Axios):You should be referenced to the app on the server
+axios.get("http://localhost:8080/backend/employee/all")
+axios.post("http://localhost:8080/backend/employee/add")
+
+04 May 2026
+
+Enterprise System
+
+34
+
+Deployment
+After Deployment
+Tomcat/webapps/
+|------- backend (Spring Boot WAR)
+
+http://localhost:8080/backend/
+
+|------- frontend (React static files)
+
+http://localhost:8080/frontend/
+
+04 May 2026
+
+Enterprise System
+
+35
+
+Practice| Spring boot + React
+• Spring Boot App : build war file then move it to tomcat/webapps
+
+04 May 2026
+
+Enterprise System
+
+36
+
+Practice| Spring boot + React
+• React App :
+• Create Home, NavBar and Department and Employee components
+
+04 May 2026
+
+Enterprise System
+
+37
+
+Practice| Spring boot + React
+React App: Routing Between Pages→App.jsx
+
+04 May 2026
+
+Enterprise System
+
+38
+
+Practice| Spring boot + React
+• React App : Deparment.jsx
+
+04 May 2026
+
+Enterprise System
+
+39
+
+Practice| Spring boot + React
+• React App : Deparment.jsx
+
+04 May 2026
+
+Enterprise System
+
+40
+
+Practice| Spring boot + React
+React App: Employee.jsx
+
+04 May 2026
+
+Enterprise System
+
+41
+
+Practice| Spring boot + React
+React App: Employee.jsx
+
+04 May 2026
+
+Enterprise System
+
+42
+
+Practice| Spring boot + React
+React App: Employee.jsx
+
+04 May 2026
+
+Enterprise System
+
+43
+
+Practice| Spring boot + React
+Build Production file to deploy the tomcat server: go to react app--> in terminal →npm run build
+
+Output→generated Dist folder inside yout react app then rename to frontend then move it to tomcat/webapps/
+
+Access:
+http://localhost:8080/frontend/
+
+04 May 2026
+
+Enterprise System
+
+44
+
+Thank you
+
+04 May
+20262026
+04 May
+
+Enterprise System
+
+45
+
+

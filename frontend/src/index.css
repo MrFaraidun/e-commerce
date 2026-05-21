@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* 
+  Enable class-based dark mode for the 'dark:' utility variant
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Register custom design tokens for use as Tailwind classes (e.g. bg-admin-bg) */
+  --color-emerald-glow: #3bc950;
+  
+  --color-admin-bg: var(--admin-bg);
+  --color-admin-card: var(--admin-card);
+  --color-admin-border: var(--admin-border);
+  --color-admin-text: var(--admin-text);
+  --color-admin-muted: var(--admin-muted);
+
+  --color-tea-green-900: var(--tea-green-900);
+  --color-tea-green-800: var(--tea-green-800);
+  --color-tea-green-500: var(--tea-green-500);
+  --color-carbon-black-100: var(--carbon-black-100);
+  --color-carbon-black-500: var(--carbon-black-500);
+  --color-dusty-olive-600: var(--dusty-olive-600);
+}
+
+@layer base {
+  :root {
+    /* Light Mode Defaults */
+    --admin-bg: #f9fafb;
+    --admin-card: #ffffff;
+    --admin-border: #e5e7eb;
+    --admin-text: #111827;
+    --admin-muted: #6b7280;
+
+    --tea-green-900: #f9fbf9;
+    --tea-green-800: #f0f4f0;
+    --tea-green-500: #c6dec6;
+    --carbon-black-100: #111811;
+    --carbon-black-500: #1f241f;
+    --dusty-olive-600: #758173;
+  }
+
+  .dark {
+    /* Dark Mode Overrides (Deep Noir Aesthetic) */
+    --admin-bg: #09090b;
+    --admin-card: #141418;
+    --admin-border: rgba(255, 255, 255, 0.04);
+    --admin-text: #f8fafc;
+    --admin-muted: #94a3b8;
+
+    --tea-green-900: #09090b;
+    --tea-green-800: #141418;
+    --carbon-black-100: #f8fafc;
+    --dusty-olive-600: #94a3b8;
+  }
+
+  html {
+    transition: color 0.3s, background-color 0.3s;
+  }
+  
+  body {
+    @apply bg-tea-green-900 text-carbon-black-100 font-sans antialiased selection:bg-emerald-glow/20;
+  }
+
+  .dark body {
+    @apply bg-admin-bg text-admin-text;
+  }
+}
+
+/* Premium UI Utilities */
+@layer utilities {
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/60 dark:bg-white/[0.03] border border-white/20 dark:border-white/[0.05] rounded-3xl transition-all duration-500;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  .premium-shadow {
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  .dark .premium-shadow {
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .mesh-gradient {
+    background: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+  }
+
+  .dark .mesh-gradient {
+    background: radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 dark:bg-white/10 rounded-full hover:bg-gray-300 dark:hover:bg-white/20 transition-all;
+}

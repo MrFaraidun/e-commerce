@@ -1,0 +1,175 @@
+[5/10/26 11:54 AM] Faraidun: Project Guide: Spring Boot + React Full-Stack Application
+
+1. Group Formation
+
+Each group must consist of 1 to 4 members.
+
+2. Project Requirements
+
+Entities (Minimum 5)
+
+Your system must include at least 5 entities (database tables).
+
+Each entity should include:
+
+Primary Key (id)
+
+At least 3-5 attributes
+
+Relationships (OneToMany, ManyToOne, etc.) Bidirectional or unidirectional
+
+3. Architecture: Three-Tier Setup
+
+You must implement the system using Three-Tier Architecture:
+
+PC1 - Database Server
+
+Install: MySQL (xampp)
+
+Responsibilities:
+
+Store data
+
+Handle queries
+
+Must allow remote connections from PC2
+
+PC2 - Application Server (Tomcat)
+
+Install:
+
+Apache Tomcat
+
+Responsibilities:
+
+Backend:
+
+Host Spring Boot App (backend.war)
+
+Host React Frontend (frontend folder)
+
+Built using Spring Boot and connect to MySQL on PC1(via IP address)
+[5/10/26 11:55 AM] Faraidun: Expose REST APIs (/api/...)
+
+Packaged as.war
+
+Frontend:
+
+Built using React + vite
+
+Use Axios to call backend APIs
+
+Build output → /dist rename dist →frontend
+
+PC3 - Client (Browser)
+
+Access system via browser:
+
+http://<PC2-IP>:8080/
+
+No installation required (only browser)
+
+Network Requirement
+
+All 3 PCs must be connected on the same network (LAN)
+
+Use IP addresses instead of localhost
+
+Example:
+
+192.168.1.10
+
+192.168.1.20
+
+PC1 (DB):
+
+PC2 (Server):
+
+PC3 (Client):
+
+192.168.1.30
+
+4. Deployment on Tomcat
+
+Step 1: Deploy Backend (.war)
+
+1. Build WAR:
+
+mvn clean package
+
+2. Copy file:
+
+target/app.war →rename yor app.war to backend.war→ tomcat/webapps/
+
+3. Start Tomcat:
+
+The app will be available at:
+
+http://<PC2-IP>:8080/backend
+[5/10/26 11:55 AM] Faraidun: Step 2: Deploy Frontend (React)
+
+1. Build React app:
+
+npm run build
+
+2. Copy build folder:
+
+dist/→ rename dist→frontendtomcat/webapps/
+
+3. Access:
+
+http://<PC2-IP>:8080/frontend/
+
+Step 3: Connect Frontend → Backend
+
+In React (Axios):
+
+axios.get("http://<PC2-IP>:8080/backend/employee/all")
+
+Do NOT use localhost use server IP.
+
+5. Automate Tomcat Startup
+
+◆ On Windows (PC2)
+
+Option 1: Install as Service
+
+cd tomcat/bin
+
+service.bat install
+
+Then:
+
+Open Services
+
+Find: Apache Tomcat
+
+Set:
+
+Startup Type → Automatic
+
+6. Functional Requirements
+
+Your system must include:
+
+CRUD operations (Create, Read, Update, Delete)
+
+REST API integration
+
+Form validation
+
+Table display (Bootstrap UI)
+[5/10/26 11:55 AM] Faraidun: 7. Ul Requirements
+
+Use:
+
+Bootstrap or Tailwind
+
+Must include:
+
+Navigation bar
+
+• Pages based on Spring boot 
+l.
+
+Clean layout
