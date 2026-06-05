@@ -1,0 +1,33 @@
+services:
+  # Backend Web Service (Spring Boot Docker)
+  - type: web
+    name: ecommerce_backend
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerContext: backend
+    dockerFilePath: Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        sync: true
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: true
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: true
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: JWT_SECRET
+        value: 4512908f-2871-460d-85fa-7a8e7e10c7a5-very-secure-key-that-is-long-enough
+
+  # Frontend Static Site (React/Vite)
+  - type: web
+    name: ecommerce_frontend
+    env: static
+    plan: free
+    region: frankfurt
+    rootDir: frontend
+    buildCommand: npm run build
+    publishDir: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: ${ecommerce_backend}/backend/api
