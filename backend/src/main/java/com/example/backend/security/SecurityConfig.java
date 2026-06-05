@@ -25,14 +25,22 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @org.springframework.beans.factory.annotation.Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/api/products/**", "/api/categories/**").permitAll()
-                .anyRequest().permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**", "/api/categories/**", "/api/reviews/product/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/products/**", "/api/categories/**").hasRole("ADMIN")
+                .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/products/**", "/api/categories/**").hasRole("ADMIN")
+                .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/api/products/**", "/api/categories/**").hasRole("ADMIN")
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -54,7 +62,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        if ("*".equals(allowedOrigins)) {
+            configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        } else {
+            configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+        }
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

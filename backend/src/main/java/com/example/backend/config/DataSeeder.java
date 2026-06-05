@@ -17,6 +17,18 @@ import java.util.ArrayList;
 @Configuration
 public class DataSeeder {
 
+    @org.springframework.beans.factory.annotation.Value("${app.admin.email}")
+    private String adminEmail;
+
+    @org.springframework.beans.factory.annotation.Value("${app.admin.password}")
+    private String adminPassword;
+
+    @org.springframework.beans.factory.annotation.Value("${app.user.email}")
+    private String userEmail;
+
+    @org.springframework.beans.factory.annotation.Value("${app.user.password}")
+    private String userPassword;
+
     @Bean
     CommandLineRunner initDatabase(CategoryRepository categoryRepo, ProductRepository productRepo, UserRepository userRepo, PasswordEncoder passwordEncoder) {
         return args -> {
@@ -44,8 +56,8 @@ public class DataSeeder {
             if (userRepo.count() == 0) {
                 User admin = new User();
                 admin.setUsername("Admin User");
-                admin.setPassword(passwordEncoder.encode("admin123"));
-                admin.setEmail("admin@enterprise.com");
+                admin.setPassword(passwordEncoder.encode(adminPassword));
+                admin.setEmail(adminEmail);
                 admin.setRole("ADMIN");
                 admin.setAddresses(new ArrayList<>());
                 admin.setOrders(new ArrayList<>());
@@ -54,15 +66,15 @@ public class DataSeeder {
 
                 User normalUser = new User();
                 normalUser.setUsername("John Doe");
-                normalUser.setPassword(passwordEncoder.encode("user123"));
-                normalUser.setEmail("user@enterprise.com");
+                normalUser.setPassword(passwordEncoder.encode(userPassword));
+                normalUser.setEmail(userEmail);
                 normalUser.setRole("USER");
                 normalUser.setAddresses(new ArrayList<>());
                 normalUser.setOrders(new ArrayList<>());
                 normalUser.setReviews(new ArrayList<>());
                 userRepo.save(normalUser);
 
-                System.out.println("✅ Users Seeded! Admin: admin@enterprise.com/admin123 | User: user@enterprise.com/user123");
+                System.out.println("✅ Users Seeded! Admin: " + adminEmail + " | User: " + userEmail);
             }
         };
     }

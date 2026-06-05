@@ -12,8 +12,14 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @jakarta.validation.constraints.Min(value = 1, message = "Rating must be at least 1")
+    @jakarta.validation.constraints.Max(value = 5, message = "Rating must be at most 5")
     private int rating;
+    
+    @jakarta.validation.constraints.NotBlank(message = "Comment cannot be blank")
+    @jakarta.validation.constraints.Size(max = 1000, message = "Comment must not exceed 1000 characters")
     private String comment;
+    
     private Date date;
 
     @ManyToOne

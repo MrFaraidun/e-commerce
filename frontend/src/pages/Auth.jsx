@@ -112,7 +112,7 @@ const Auth = () => {
           </button>
         </div>
 
-        {isLogin && (
+        {isLogin && import.meta.env.DEV && (
           <div className="mt-4 p-3 bg-tea-green-800 border border-tea-green-500 rounded-xl text-center">
             <p className="text-[10px] text-dusty-olive-600 font-semibold mb-1">Demo Accounts</p>
             <p className="text-[11px] text-dusty-olive-500">Admin: admin@enterprise.com / admin123</p>

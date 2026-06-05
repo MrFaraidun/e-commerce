@@ -8,10 +8,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private com.example.backend.repository.UserRepository userRepository;
 
     @GetMapping
     public List<User> getAll() {
@@ -19,8 +21,19 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public org.springframework.http.ResponseEntity<?> getById(@PathVariable Long id, @org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails currentUser) {
+        User dbUser = userRepository.findByEmail(currentUser.getUsername());
+        if (dbUser == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!dbUser.getId().equals(id) && !dbUser.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
+        User targetUser = userService.getUserById(id);
+        if (targetUser == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        return org.springframework.http.ResponseEntity.ok(targetUser);
     }
 
     @PostMapping
@@ -29,13 +42,41 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
-        return userService.saveUser(user);
+    public org.springframework.http.ResponseEntity<?> update(@PathVariable Long id, @RequestBody User userDetails, @org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails currentUser) {
+        User dbUser = userRepository.findByEmail(currentUser.getUsername());
+        if (dbUser == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!dbUser.getId().equals(id) && !dbUser.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
+        
+        User existingUser = userService.getUserById(id);
+        if (existingUser == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        
+        existingUser.setUsername(userDetails.getUsername());
+        existingUser.setEmail(userDetails.getEmail());
+        
+        // Only allow admins to promote user roles
+        if (dbUser.getRole().equals("ADMIN") && userDetails.getRole() != null) {
+            existingUser.setRole(userDetails.getRole());
+        }
+        
+        return org.springframework.http.ResponseEntity.ok(userService.saveUser(existingUser));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public org.springframework.http.ResponseEntity<?> delete(@PathVariable Long id, @org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.core.userdetails.UserDetails currentUser) {
+        User dbUser = userRepository.findByEmail(currentUser.getUsername());
+        if (dbUser == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!dbUser.getId().equals(id) && !dbUser.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
         userService.deleteUser(id);
+        return org.springframework.http.ResponseEntity.ok().build();
     }
 }

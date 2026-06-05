@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
-@CrossOrigin(origins = "*")
 public class OrderController {
     @Autowired
     private OrderService orderService;
@@ -21,8 +20,12 @@ public class OrderController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<Order> getAll() {
-        return orderService.getAllOrders();
+    public org.springframework.http.ResponseEntity<?> getAll(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null || !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
+        return org.springframework.http.ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/my-orders")
@@ -33,16 +36,31 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public Order getById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public org.springframework.http.ResponseEntity<?> getById(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Order order = orderService.getOrderById(id);
+        if (order == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!order.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
+        return org.springframework.http.ResponseEntity.ok(order);
     }
 
     @PostMapping
-    public Order create(@RequestBody Order order, @AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails != null) {
-            User user = userRepository.findByEmail(userDetails.getUsername());
-            order.setUser(user);
+    public org.springframework.http.ResponseEntity<?> create(@RequestBody Order order, @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
         }
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        order.setUser(user);
         order.setOrderDate(new java.util.Date());
         
         // Link items to the order so Hibernate can save the order_id correctly
@@ -52,18 +70,40 @@ public class OrderController {
             }
         }
         
-        return orderService.saveOrder(order);
+        return org.springframework.http.ResponseEntity.ok(orderService.saveOrder(order));
     }
 
     @PutMapping("/{id}")
-    public Order update(@PathVariable Long id, @RequestBody Order order) {
+    public org.springframework.http.ResponseEntity<?> update(@PathVariable Long id, @RequestBody Order order, @AuthenticationPrincipal UserDetails userDetails) {
         Order existing = orderService.getOrderById(id);
+        if (existing == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!existing.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
         existing.setStatus(order.getStatus());
-        return orderService.saveOrder(existing);
+        return org.springframework.http.ResponseEntity.ok(orderService.saveOrder(existing));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public org.springframework.http.ResponseEntity<?> delete(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Order existing = orderService.getOrderById(id);
+        if (existing == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!existing.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
         orderService.deleteOrder(id);
+        return org.springframework.http.ResponseEntity.ok().build();
     }
 }

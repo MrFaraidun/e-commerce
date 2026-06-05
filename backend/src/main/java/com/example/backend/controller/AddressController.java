@@ -12,7 +12,6 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/addresses")
-@CrossOrigin(origins = "*")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -22,20 +21,40 @@ public class AddressController {
 
     @GetMapping("/my")
     public List<Address> getMyAddresses(Principal principal) {
+        if (principal == null) return List.of();
         return addressService.getAddressesByUserEmail(principal.getName());
     }
 
     @PostMapping
-    public Address create(@RequestBody Address address, Principal principal) {
+    public org.springframework.http.ResponseEntity<?> create(@RequestBody Address address, Principal principal) {
+        if (principal == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
         User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
         address.setUser(user);
-        return addressService.saveAddress(address);
+        return org.springframework.http.ResponseEntity.ok(addressService.saveAddress(address));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id, Principal principal) {
-        // Simple check: get address and check if it belongs to user
-        // For brevity, we assume service handles or we do it here
+    public org.springframework.http.ResponseEntity<?> delete(@PathVariable Long id, Principal principal) {
+        if (principal == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        Address address = addressService.getAddressById(id);
+        if (address == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!address.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
         addressService.deleteAddress(id);
+        return org.springframework.http.ResponseEntity.ok().build();
     }
 }

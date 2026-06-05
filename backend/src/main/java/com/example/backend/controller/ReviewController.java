@@ -12,7 +12,6 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/reviews")
-@CrossOrigin(origins = "*")
 public class ReviewController {
     @Autowired
     private ReviewService reviewService;
@@ -26,15 +25,35 @@ public class ReviewController {
     }
 
     @PostMapping
-    public Review create(@RequestBody Review review, Principal principal) {
+    public org.springframework.http.ResponseEntity<?> create(@RequestBody Review review, Principal principal) {
+        if (principal == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
         User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
         review.setUser(user);
-        return reviewService.saveReview(review);
+        return org.springframework.http.ResponseEntity.ok(reviewService.saveReview(review));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id, Principal principal) {
-        // Ownership check can be added here
+    public org.springframework.http.ResponseEntity<?> delete(@PathVariable Long id, Principal principal) {
+        if (principal == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        Review review = reviewService.getReviewById(id);
+        if (review == null) {
+            return org.springframework.http.ResponseEntity.notFound().build();
+        }
+        User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.UNAUTHORIZED).build();
+        }
+        if (!review.getUser().getId().equals(user.getId()) && !user.getRole().equals("ADMIN")) {
+            return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.FORBIDDEN).body("Access Denied");
+        }
         reviewService.deleteReview(id);
+        return org.springframework.http.ResponseEntity.ok().build();
     }
 }

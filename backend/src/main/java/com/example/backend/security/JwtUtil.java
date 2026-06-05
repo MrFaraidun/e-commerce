@@ -13,9 +13,11 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Usually you'd inject this from application.properties, using a static key for demonstration
-    private static final String SECRET = "4512908f-2871-460d-85fa-7a8e7e10c7a5-very-secure-key-that-is-long-enough";
-    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final Key key;
+
+    public JwtUtil(@org.springframework.beans.factory.annotation.Value("${jwt.secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
     
     // 24 Hours
     private static final long JWT_EXPIRATION_MS = 86400000;
