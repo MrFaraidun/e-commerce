@@ -58,8 +58,8 @@ const Auth = () => {
         className="max-w-md w-full p-8 md:p-10 bg-tea-green-800/50 border border-tea-green-500 rounded-3xl backdrop-blur-xl shadow-2xl"
       >
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-emerald-glow rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-glow/30">
-            <span className="text-xl font-black text-white">E</span>
+          <div className="w-14 h-14 bg-neutral-950 dark:bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <span className="text-xl font-serif font-black text-white dark:text-neutral-950">V</span>
           </div>
           <h1 className="text-2xl font-black tracking-tight text-carbon-black-100 mb-2">
             {isLogin ? 'Welcome Back' : 'Create Account'}
@@ -112,11 +112,11 @@ const Auth = () => {
           </button>
         </div>
 
-        {isLogin && import.meta.env.DEV && (
-          <div className="mt-4 p-3 bg-tea-green-800 border border-tea-green-500 rounded-xl text-center">
-            <p className="text-[10px] text-dusty-olive-600 font-semibold mb-1">Demo Accounts</p>
-            <p className="text-[11px] text-dusty-olive-500">Admin: admin@enterprise.com / admin123</p>
-            <p className="text-[11px] text-dusty-olive-500">User: user@enterprise.com / user123</p>
+        {isLogin && (
+          <div className="mt-4 p-3 bg-tea-green-800/80 dark:bg-white/5 border border-tea-green-500/30 rounded-xl text-center">
+            <p className="text-[10px] text-dusty-olive-600 dark:text-neutral-400 font-semibold mb-1">Demo Accounts</p>
+            <p className="text-[11px] text-dusty-olive-500 dark:text-neutral-400">Admin: admin@enterprise.com | admin123</p>
+            <p className="text-[11px] text-dusty-olive-500 dark:text-neutral-400">User: user@enterprise.com | user123</p>
           </div>
         )}
       </motion.div>

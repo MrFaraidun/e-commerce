@@ -12,8 +12,8 @@ const MainLayout = ({ children }) => {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-emerald-glow rounded-lg flex items-center justify-center text-white font-bold text-sm">E</div>
-              <span className="text-base font-bold tracking-tight">Enterprise</span>
+              <div className="w-9 h-9 bg-neutral-900 rounded-lg flex items-center justify-center text-white font-serif font-black text-sm">V</div>
+              <span className="text-base font-black tracking-widest uppercase">Veloce</span>
             </div>
             <p className="text-gray-400 text-xs leading-relaxed">Premium products. Simple shopping. Great prices.</p>
           </div>
@@ -35,7 +35,7 @@ const MainLayout = ({ children }) => {
           </div>
         </div>
         <div className="max-w-7xl mx-auto pt-10 mt-10 border-t border-white/5 text-center text-gray-500 text-[10px] uppercase tracking-widest">
-          © 2026 Enterprise Store
+          © 2026 Veloce Store
         </div>
       </footer>
     </div>

@@ -25,10 +25,10 @@ const Navbar = () => {
   return (
     <nav className="px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between border-b border-admin-border bg-admin-card/80 sticky top-0 z-50 backdrop-blur-xl transition-all">
       <Link to="/" className="flex items-center gap-2 lg:gap-3 hover:opacity-90 transition-all group shrink-0">
-        <div className="w-8 h-8 lg:w-9 lg:h-9 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-          E
+        <div className="w-8 h-8 lg:w-9 lg:h-9 bg-neutral-950 dark:bg-white rounded-xl flex items-center justify-center text-white dark:text-neutral-950 font-serif font-black shadow-lg group-hover:scale-105 transition-all">
+          V
         </div>
-        <span className="text-sm lg:text-base font-bold tracking-tight text-admin-text hidden sm:block">Enterprise</span>
+        <span className="text-sm lg:text-base font-black tracking-widest text-admin-text hidden sm:block">VELOCE</span>
       </Link>
       
       <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-widest text-admin-muted">

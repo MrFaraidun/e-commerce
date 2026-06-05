@@ -31,11 +31,11 @@ const Home = () => (
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-emerald-glow/5 rounded-full blur-[80px] lg:blur-[120px] -z-10"></div>
     
     <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-6 lg:mb-8">
-      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-emerald-glow rounded-3xl flex items-center justify-center mx-auto mb-6 lg:mb-8 shadow-2xl shadow-emerald-glow/30">
-        <span className="text-2xl lg:text-3xl font-black text-white">E</span>
+      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-neutral-950 dark:bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 lg:mb-8 shadow-2xl border border-white/10 dark:border-black/5 hover:rotate-6 transition-transform duration-300">
+        <span className="text-2xl lg:text-3xl font-serif font-black text-white dark:text-neutral-950">V</span>
       </div>
       <h1 className="text-4xl md:text-7xl font-black text-carbon-black-100 mb-4 tracking-tight leading-tight">
-        Shop <span className="text-emerald-glow">Smarter</span>
+        Veloce <span className="text-emerald-glow">Store</span>
       </h1>
       <p className="text-dusty-olive-600 text-sm md:text-base max-w-md mx-auto leading-relaxed">
         Discover premium products at great prices. Quality meets convenience in one beautiful store.

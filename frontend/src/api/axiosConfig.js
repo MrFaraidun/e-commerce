@@ -1,8 +1,6 @@
 import axios from "axios";
 
-const defaultBaseUrl = typeof window !== "undefined"
-  ? `${window.location.protocol}//${window.location.hostname}:8080/backend/api`
-  : "/backend/api";
+const defaultBaseUrl = "https://ecommerce-backend-sex1.onrender.com/backend/api";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || defaultBaseUrl,
