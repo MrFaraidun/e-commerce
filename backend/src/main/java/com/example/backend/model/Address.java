@@ -5,6 +5,9 @@ import lombok.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
+@Table(name = "address", indexes = {
+    @Index(name = "idx_address_user_id", columnList = "user_id")
+})
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Address {
     @Id

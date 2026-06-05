@@ -6,6 +6,10 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
+@Table(name = "review", indexes = {
+    @Index(name = "idx_review_product_id", columnList = "product_id"),
+    @Index(name = "idx_review_user_id", columnList = "user_id")
+})
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Review {
     @Id

@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "product", indexes = {
+    @Index(name = "idx_product_category_id", columnList = "category_id")
+})
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Product {
     @Id

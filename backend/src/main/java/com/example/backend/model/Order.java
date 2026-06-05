@@ -9,7 +9,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "customer_order") // 'order' is a reserved word in MySQL
+@Table(name = "customer_order", indexes = {
+    @Index(name = "idx_order_user_id", columnList = "user_id"),
+    @Index(name = "idx_order_address_id", columnList = "address_id")
+}) // 'order' is a reserved word in MySQL
 @Getter
 @Setter
 @NoArgsConstructor
