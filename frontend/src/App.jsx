@@ -94,6 +94,16 @@ function App() {
                 <Route path="/admin/analytics" element={<AdminRoute><AdminLayout><AdminAnalytics /></AdminLayout></AdminRoute>} />
               </Routes>
             </Router>
+            {/* Watermark Badge */}
+            <a
+              href="https://faraidun.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="watermark-badge"
+            >
+              <span className="watermark-dot"></span>
+              MADE BY FARAIDUN
+            </a>
           </CartProvider>
         </WishlistProvider>
       </AuthProvider>
