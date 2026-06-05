@@ -118,10 +118,10 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--carbon-black-500);
+  border: 1px solid var(--tea-green-500, rgba(198, 222, 198, 0.15));
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--dusty-olive-600);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 2.5px;
@@ -129,25 +129,28 @@
   text-decoration: none;
   font-family: system-ui, -apple-system, sans-serif;
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .watermark-badge:hover {
-  background: #242424;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border-color: #3bc950;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(59, 201, 80, 0.15);
   transform: translateY(-2px);
+}
+
+.watermark-badge:hover .watermark-dot {
+  box-shadow: 0 0 10px rgba(59, 201, 80, 0.6);
 }
 
 .watermark-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #a08c5b;
+  background: #3bc950;
   flex-shrink: 0;
-  box-shadow: 0 0 6px rgba(160, 140, 91, 0.4);
+  box-shadow: 0 0 6px rgba(59, 201, 80, 0.4);
 }
 
