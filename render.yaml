@@ -9,11 +9,11 @@ services:
     dockerfilePath: Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
-        sync: true
+        sync: false
       - key: SPRING_DATASOURCE_USERNAME
-        sync: true
+        sync: false
       - key: SPRING_DATASOURCE_PASSWORD
-        sync: true
+        sync: false
       - key: SPRING_JPA_HIBERNATE_DDL_AUTO
         value: update
       - key: JWT_SECRET
@@ -24,7 +24,6 @@ services:
     name: ecommerce_frontend
     env: static
     plan: free
-    region: frankfurt
     rootDir: frontend
     buildCommand: npm run build
     staticPublishPath: ./dist
